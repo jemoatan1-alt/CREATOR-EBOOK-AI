@@ -1,0 +1,55 @@
+{
+  "name": "creator-ebook-ai",
+  "version": "1.0.0",
+  "description": "CRIADOR E EDITOR DE EBOOKS E STORY BOOK COM IA. CRIADOR DE IMAGENS IA, ROTEIROS E VOZEZ IA",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "node dist/app.js",
+    "dev": "ts-node src/app.ts",
+    "build": "tsc",
+    "build:demos": "tsc -p tsconfig.demos.json",
+    "test": "jest",
+    "demo:elevenlabs": "ts-node -r dotenv/config demos/ElevenLabsDemo.tsx",
+    "lint": "eslint src/**/*.{ts,tsx}",
+    "lint:fix": "eslint src/**/*.{ts,tsx} --fix"
+  },
+  "keywords": [
+    "ai",
+    "ebook",
+    "storybook",
+    "elevenlabs",
+    "grok",
+    "veo3",
+    "text-to-speech",
+    "image-generation",
+    "video-generation"
+  ],
+  "author": "jemoatan1-alt",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.8",
+    "@types/node": "^20.10.4",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.55.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

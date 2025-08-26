@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREATOR-EBOOK-AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .demo-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .demo-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .demo-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.loading {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .api-status {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .api-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .api-status-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+        }
+
+        .api-status-indicator.connected {
+            background: #28a745;
+        }
+
+        .api-status-indicator.disconnected {
+            background: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 CREATOR-EBOOK-AI</h1>
+            <p>CRIADOR E EDITOR DE EBOOKS E STORY BOOK COM IA</p>
+        </div>
+
+        <div class="main-content">
+            <!-- API Status Section -->
+            <div class="demo-section">
+                <h2>📊 Stato dei Servizi AI</h2>
+                <div class="api-status" id="apiStatus">
+                    <div class="api-card">
+                        <div class="api-status-indicator disconnected" id="elevenLabsStatus"></div>
+                        <h4>ElevenLabs</h4>
+                        <p>Text-to-Speech</p>
+                    </div>
+                    <div class="api-card">
+                        <div class="api-status-indicator disconnected" id="grokStatus"></div>
+                        <h4>Grok AI</h4>
+                        <p>Text Generation</p>
+                    </div>
+                    <div class="api-card">
+                        <div class="api-status-indicator disconnected" id="veo3Status"></div>
+                        <h4>Veo3</h4>
+                        <p>Video Generation</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>📚 Creazione eBook AI</h3>
+                    <p>Genera automaticamente eBook completi con capitoli, trame e personaggi usando l'intelligenza artificiale Grok.</p>
+                    <button class="btn" onclick="showEbookDemo()">Prova Demo</button>
+                </div>
+
+                <div class="feature-card">
+                    <h3>🎙️ Sintesi Vocale</h3>
+                    <p>Converti il testo in audio di alta qualità con ElevenLabs per creare audiolibri professionali.</p>
+                    <button class="btn" onclick="showTTSDemo()">Prova Demo</button>
+                </div>
+
+                <div class="feature-card">
+                    <h3>🎬 Generazione Video</h3>
+                    <p>Crea video coinvolgenti dai tuoi testi o immagini usando la tecnologia Veo3 Fast di Google.</p>
+                    <button class="btn" onclick="showVideoDemo()">Prova Demo</button>
+                </div>
+            </div>
+
+            <!-- eBook Demo Section -->
+            <div class="demo-section" id="ebookDemo" style="display: none;">
+                <h2>📚 Demo Creazione eBook</h2>
+                <div class="demo-form">
+                    <div class="form-group">
+                        <label for="ebookTitle">Titolo dell'eBook:</label>
+                        <input type="text" id="ebookTitle" placeholder="Es: L'Avventura dell'IA">
+                    </div>
+                    <div class="form-group">
+                        <label for="ebookGenre">Genere:</label>
+                        <select id="ebookGenre">
+                            <option value="fantasy">Fantasy</option>
+                            <option value="sci-fi">Fantascienza</option>
+                            <option value="romance">Romantico</option>
+                            <option value="thriller">Thriller</option>
+                            <option value="mystery">Mistero</option>
+                            <option value="adventure">Avventura</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ebookChapters">Numero di Capitoli:</label>
+                        <input type="number" id="ebookChapters" value="5" min="1" max="20">
+                    </div>
+                    <button class="btn" onclick="generateEbook()">Genera eBook</button>
+                    <div class="status" id="ebookStatus"></div>
+                </div>
+            </div>
+
+            <!-- TTS Demo Section -->
+            <div class="demo-section" id="ttsDemo" style="display: none;">
+                <h2>🎙️ Demo Text-to-Speech</h2>
+                <div class="demo-form">
+                    <div class="form-group">
+                        <label for="ttsText">Testo da convertire in audio:</label>
+                        <textarea id="ttsText" placeholder="Inserisci il testo che vuoi convertire in audio...">Benvenuti in CREATOR-EBOOK-AI! Questo è un esempio di sintesi vocale di alta qualità.</textarea>
+                    </div>
+                    <button class="btn" onclick="generateSpeech()">Genera Audio</button>
+                    <div class="status" id="ttsStatus"></div>
+                    <audio controls id="audioPlayer" style="width: 100%; margin-top: 20px; display: none;"></audio>
+                </div>
+            </div>
+
+            <!-- Video Demo Section -->
+            <div class="demo-section" id="videoDemo" style="display: none;">
+                <h2>🎬 Demo Generazione Video</h2>
+                <div class="demo-form">
+                    <div class="form-group">
+                        <label for="videoPrompt">Descrizione per il video:</label>
+                        <textarea id="videoPrompt" placeholder="Es: Un castello magico al tramonto con draghi che volano...">Un castello magico al tramonto con draghi che volano nel cielo dorato</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoDuration">Durata (secondi):</label>
+                        <input type="number" id="videoDuration" value="30" min="5" max="60">
+                    </div>
+                    <button class="btn" onclick="generateVideo()">Genera Video</button>
+                    <div class="status" id="videoStatus"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check API status on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkApiStatus();
+        });
+
+        async function checkApiStatus() {
+            try {
+                const response = await fetch('/health');
+                const data = await response.json();
+                
+                // Update status indicators
+                document.getElementById('elevenLabsStatus').className = 
+                    'api-status-indicator ' + (data.services.elevenlabs ? 'connected' : 'disconnected');
+                document.getElementById('grokStatus').className = 
+                    'api-status-indicator ' + (data.services.grok ? 'connected' : 'disconnected');
+                document.getElementById('veo3Status').className = 
+                    'api-status-indicator ' + (data.services.veo3 ? 'connected' : 'disconnected');
+            } catch (error) {
+                console.error('Failed to check API status:', error);
+            }
+        }
+
+        function showEbookDemo() {
+            hideAllDemos();
+            document.getElementById('ebookDemo').style.display = 'block';
+        }
+
+        function showTTSDemo() {
+            hideAllDemos();
+            document.getElementById('ttsDemo').style.display = 'block';
+        }
+
+        function showVideoDemo() {
+            hideAllDemos();
+            document.getElementById('videoDemo').style.display = 'block';
+        }
+
+        function hideAllDemos() {
+            document.getElementById('ebookDemo').style.display = 'none';
+            document.getElementById('ttsDemo').style.display = 'none';
+            document.getElementById('videoDemo').style.display = 'none';
+        }
+
+        async function generateEbook() {
+            const title = document.getElementById('ebookTitle').value;
+            const genre = document.getElementById('ebookGenre').value;
+            const chapters = document.getElementById('ebookChapters').value;
+            const status = document.getElementById('ebookStatus');
+
+            if (!title) {
+                showStatus(status, 'error', 'Inserisci un titolo per l\'eBook');
+                return;
+            }
+
+            showStatus(status, 'loading', 'Generazione eBook in corso...');
+
+            try {
+                const response = await fetch('/api/create-ebook', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        title,
+                        genre,
+                        chapters: parseInt(chapters),
+                        includeAudio: false,
+                        includeImages: false
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showStatus(status, 'success', `eBook "${data.title}" generato con successo! ${data.chapters.length} capitoli creati.`);
+                } else {
+                    showStatus(status, 'error', data.error || 'Errore durante la generazione');
+                }
+            } catch (error) {
+                showStatus(status, 'error', 'Errore di connessione: ' + error.message);
+            }
+        }
+
+        async function generateSpeech() {
+            const text = document.getElementById('ttsText').value;
+            const status = document.getElementById('ttsStatus');
+            const audioPlayer = document.getElementById('audioPlayer');
+
+            if (!text) {
+                showStatus(status, 'error', 'Inserisci del testo da convertire');
+                return;
+            }
+
+            showStatus(status, 'loading', 'Generazione audio in corso...');
+
+            try {
+                const response = await fetch('/api/tts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ text })
+                });
+
+                if (response.ok) {
+                    const audioBlob = await response.blob();
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    
+                    audioPlayer.src = audioUrl;
+                    audioPlayer.style.display = 'block';
+                    
+                    showStatus(status, 'success', 'Audio generato con successo!');
+                } else {
+                    const data = await response.json();
+                    showStatus(status, 'error', data.error || 'Errore durante la generazione audio');
+                }
+            } catch (error) {
+                showStatus(status, 'error', 'Errore di connessione: ' + error.message);
+            }
+        }
+
+        async function generateVideo() {
+            const prompt = document.getElementById('videoPrompt').value;
+            const duration = document.getElementById('videoDuration').value;
+            const status = document.getElementById('videoStatus');
+
+            if (!prompt) {
+                showStatus(status, 'error', 'Inserisci una descrizione per il video');
+                return;
+            }
+
+            showStatus(status, 'loading', 'Generazione video in corso...');
+
+            try {
+                const response = await fetch('/api/generate-video', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        prompt,
+                        duration: parseInt(duration)
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showStatus(status, 'success', `Video generato! URL: ${data.videoUrl}`);
+                } else {
+                    showStatus(status, 'error', data.error || 'Errore durante la generazione video');
+                }
+            } catch (error) {
+                showStatus(status, 'error', 'Errore di connessione: ' + error.message);
+            }
+        }
+
+        function showStatus(element, type, message) {
+            element.className = `status ${type}`;
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
