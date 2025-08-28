@@ -3,10 +3,17 @@
   "version": "1.0.0",
   "description": "CRIADOR E EDITOR DE EBOOKS E STORY BOOK COM IA. CRIADOR DE IMAGENS IA, ROTEIROS E VOZEZ IA",
   "main": "dist/app.js",
+  "files": [
+    "dist/**/*",
+    "package.json"
+  ],
   "scripts": {
     "start": "node dist/app.js",
     "dev": "ts-node src/app.ts",
-    "build": "tsc",
+    "build": "npm run clean && npm run build:server && npm run build:frontend",
+    "clean": "rm -rf dist build",
+    "build:server": "tsc",
+    "build:frontend": "mkdir -p build && cp -r public/* build/ && mkdir -p dist/public && cp -r public/* dist/public/",
     "build:demos": "tsc -p tsconfig.demos.json",
     "test": "jest",
     "demo:elevenlabs": "ts-node -r dotenv/config demos/ElevenLabsDemo.tsx",
