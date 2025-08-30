@@ -3,10 +3,17 @@
   "version": "1.0.0",
   "description": "CRIADOR E EDITOR DE EBOOKS E STORY BOOK COM IA. CRIADOR DE IMAGENS IA, ROTEIROS E VOZEZ IA",
   "main": "dist/app.js",
+  "files": [
+    "dist/**/*",
+    "package.json"
+  ],
   "scripts": {
     "start": "node dist/app.js",
     "dev": "ts-node src/app.ts",
-    "build": "tsc",
+    "build": "npm run clean && npm run build:server && npm run build:frontend",
+    "clean": "rm -rf dist build",
+    "build:server": "tsc",
+    "build:frontend": "mkdir -p build && cp -r public/* build/ && mkdir -p dist/public && cp -r public/* dist/public/",
     "build:demos": "tsc -p tsconfig.demos.json",
     "test": "jest",
     "demo:elevenlabs": "ts-node -r dotenv/config demos/ElevenLabsDemo.tsx",
@@ -31,8 +38,6 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "typescript": "^5.3.3"
   },
   "devDependencies": {
@@ -40,8 +45,6 @@
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.8",
     "@types/node": "^20.10.4",
-    "@types/react": "^18.2.45",
-    "@types/react-dom": "^18.2.18",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "eslint": "^8.55.0",
